@@ -1023,16 +1023,12 @@
   });
 
   btnContinue.addEventListener('click', function(){
-    // Navigate the top-level page (breaking out of the iframe if embedded)
-    // to a relative /haus path, so this keeps working automatically
-    // whether the site is on the figma.site preview domain or a
-    // custom domain later — no hardcoded domain to go stale.
+    // Points at the published custom domain's /haus page.
+    var target = 'https://www.thehausofhaze.com/haus';
     try {
-      window.top.location.href = '/haus';
+      window.top.location.href = target;
     } catch (e) {
-      // Cross-origin access blocked for some reason — fall back to
-      // navigating this frame directly.
-      window.location.href = '/haus';
+      window.location.href = target;
     }
   });
 
