@@ -409,10 +409,57 @@
   .entered-logo path{ fill:var(--gold); }
   .entered-logo path.st2{ fill:var(--gold-hi); }
   .entered-body{ font-size:.88rem; color:var(--ink-dim); line-height:1.7; margin:0 0 1.6rem; }
+
+  .entered-info{
+    text-align:center;
+    margin:0 0 1.7rem;
+    padding-top:1.4rem;
+    border-top:1px solid rgba(233,201,131,.22);
+  }
+  .entered-info-title{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:.76rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 .9rem;
+  }
+  .entered-info-body{
+    font-family:var(--sans);
+    font-size:.82rem;
+    line-height:1.7;
+    color:var(--ink-dim);
+    margin:0 0 .9rem;
+  }
+  .entered-info-body--last{ margin-bottom:1rem; }
+  .entered-info-question{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:.8rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin:-.3rem 0 1rem;
+  }
+  .entered-divider{
+    display:block;
+    width:1px;
+    height:16px;
+    margin:0 auto 1rem;
+    background:linear-gradient(180deg, transparent, var(--gold), transparent);
+  }
   .btn-continue{
     background:transparent; color:var(--gold);
     border:1px solid var(--gold);
     width:100%;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.05rem;
+    line-height:1.5;
+    letter-spacing:.01em;
+    padding:.75rem 1rem;
   }
   .btn-continue:hover{ background:rgba(200,159,76,.1); }
 
@@ -816,7 +863,17 @@
       <p class="entered-body">
         Age confirmed. Please continue only if you agree to enjoy responsibly.
       </p>
-      <button type="button" class="btn-continue" id="btn-continue">Continue to Haus of Haze™</button>
+
+      <div class="entered-info">
+        <p class="entered-info-title">Welcome to Haus of Haze™</p>
+        <p class="entered-info-body">A Caribbean-founded premium infused beverage and experiential house where every expression begins with one defining question:</p>
+        <p class="entered-info-question">How does the consumer want to feel?</p>
+        <span class="entered-divider" aria-hidden="true"></span>
+        <p class="entered-info-body">Haus of Haze™ creates beverages with feeling at their centre&mdash;bringing flavour, aroma, sensory character and presentation together in expressions designed for distinct moods, moments and occasions.</p>
+        <p class="entered-info-body entered-info-body--last">The doors are open.</p>
+      </div>
+
+      <button type="button" class="btn-continue" id="btn-continue">Experience the Haus.<br>Live the Haze.</button>
     </section>
 
   </main>
@@ -966,8 +1023,17 @@
   });
 
   btnContinue.addEventListener('click', function(){
-    // Hand off to the Figma Sites /haus page.
-    window.location.href = 'https://thehausofhaze.figma.site/haus';
+    // Navigate the top-level page (breaking out of the iframe if embedded)
+    // to a relative /haus path, so this keeps working automatically
+    // whether the site is on the figma.site preview domain or a
+    // custom domain later — no hardcoded domain to go stale.
+    try {
+      window.top.location.href = '/haus';
+    } catch (e) {
+      // Cross-origin access blocked for some reason — fall back to
+      // navigating this frame directly.
+      window.location.href = '/haus';
+    }
   });
 
   // Returning visitor with a remembered verification.
